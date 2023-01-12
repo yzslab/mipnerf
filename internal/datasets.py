@@ -323,7 +323,9 @@ class Blender(Dataset):
     cams = []
     for i in range(len(meta['frames'])):
       frame = meta['frames'][i]
-      fname = os.path.join(self.data_dir, frame['file_path'] + '.png')
+      fname = os.path.join(self.data_dir, frame['file_path'])
+      if os.path.exists(fname) is False:
+        fname += + '.png'
       with utils.open_file(fname, 'rb') as imgin:
         image = np.array(Image.open(imgin), dtype=np.float32) / 255.
         if config.factor == 2:
